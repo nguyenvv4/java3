@@ -20,6 +20,13 @@ public class SinhVien {
 
     private Integer trangThai;
 
+    public String hienThiTrangThai() {
+        if (trangThai == 1) {
+            return "Passed";
+        }
+        return "Failed";
+    }
+
     public SinhVien() {
     }
 
@@ -76,5 +83,4 @@ public class SinhVien {
         return "SinhVien{" + "id=" + id + ", hoTen=" + hoTen + ", diaChi=" + diaChi + ", tuoi=" + tuoi + ", trangThai=" + trangThai + '}';
     }
 
-    
 }

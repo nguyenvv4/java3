@@ -38,7 +38,25 @@ public class SinhVienRepository {
 
         return listSinhVien;
     }
-    
+
+    public Boolean addNew(SinhVien sinhVien) {
+        String sql = "insert into sinh_vien(id, ho_ten, dia_chi, nam_sinh, trang_thai) "
+                + " VALUES(?,?,?,?,?)";
+        try (Connection con = dbConnection.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setObject(1, sinhVien.getId());
+            ps.setObject(2, sinhVien.getHoTen());
+            ps.setObject(3, sinhVien.getDiaChi());
+            ps.setObject(4, sinhVien.getTuoi());
+            ps.setObject(5, sinhVien.getTrangThai());
+            int result = ps.executeUpdate();
+            return result > 0;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
         SinhVienRepository sinhVienRepository = new SinhVienRepository();
         ArrayList<SinhVien> list = sinhVienRepository.getList();
