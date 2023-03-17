@@ -20,6 +20,13 @@ public class SinhVien {
 
     private Integer trangThai;
 
+    public SinhVien(String hoTen, String diaChi, Integer tuoi, Integer trangThai) {
+        this.hoTen = hoTen;
+        this.diaChi = diaChi;
+        this.tuoi = tuoi;
+        this.trangThai = trangThai;
+    }
+
     public String hienThiTrangThai() {
         if (trangThai == 1) {
             return "Passed";

@@ -57,6 +57,49 @@ public class SinhVienRepository {
         return false;
     }
 
+    public Boolean update(int id, SinhVien sinhVien) {
+        String sql = "update sinh_vien set "
+                + "ho_ten =?, "
+                + "dia_chi=?, "
+                + "nam_sinh=?, "
+                + "trang_thai=? "
+                + "WHERE id = ?";
+        try (Connection con = dbConnection.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setObject(1, sinhVien.getHoTen());
+            ps.setObject(2, sinhVien.getDiaChi());
+            ps.setObject(3, sinhVien.getTuoi());
+            ps.setObject(4, sinhVien.getTrangThai());
+            ps.setObject(5, id);
+            int result = ps.executeUpdate();
+            return result > 0;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
+    public SinhVien getById(int id) {
+        SinhVien sinhVien = new SinhVien();
+        String sql = "select * from sinh_vien where id =? ";
+        try (Connection con = dbConnection.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setObject(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                sinhVien.setId(rs.getInt("id"));
+                sinhVien.setHoTen(rs.getString("ho_ten"));
+                sinhVien.setDiaChi(rs.getString("dia_chi"));
+                sinhVien.setTuoi(rs.getInt("nam_sinh"));
+                sinhVien.setTrangThai(rs.getInt("trang_thai"));
+                return sinhVien;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
         SinhVienRepository sinhVienRepository = new SinhVienRepository();
         ArrayList<SinhVien> list = sinhVienRepository.getList();

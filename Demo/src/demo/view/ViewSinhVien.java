@@ -98,6 +98,11 @@ public class ViewSinhVien extends javax.swing.JFrame {
         });
 
         btnSua.setText("Sửa");
+        btnSua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSuaActionPerformed(evt);
+            }
+        });
 
         tblSinhVien.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -110,6 +115,11 @@ public class ViewSinhVien extends javax.swing.JFrame {
                 "id", "Ho Ten", "Dia Chi", "Tuoi", "Trang Thai"
             }
         ));
+        tblSinhVien.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblSinhVienMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblSinhVien);
 
         jButton1.setText("Pre");
@@ -200,15 +210,47 @@ public class ViewSinhVien extends javax.swing.JFrame {
         String diaChi = txtDiaChi.getText();
         Integer namSinh = Integer.parseInt(txtTuoi.getText());
         Integer trangThai;
-        if(rdoPass.isSelected()){
-            trangThai =1;
-        }else{
-            trangThai =0;
+        if (rdoPass.isSelected()) {
+            trangThai = 1;
+        } else {
+            trangThai = 0;
         }
-        SinhVien sinhVien= new SinhVien(id, hoTen, diaChi, namSinh, trangThai);
+        SinhVien sinhVien = new SinhVien(id, hoTen, diaChi, namSinh, trangThai);
         JOptionPane.showMessageDialog(this, quanLySinhVienService.them(sinhVien));
         loadData(quanLySinhVienService.getList());
     }//GEN-LAST:event_btnThemActionPerformed
+
+    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
+        // TODO add your handling code here:
+        Integer id = Integer.parseInt(txtId.getText());
+        String hoTen = txtHoTen.getText();
+        String diaChi = txtDiaChi.getText();
+        Integer namSinh = Integer.parseInt(txtTuoi.getText());
+        Integer trangThai;
+        if (rdoPass.isSelected()) {
+            trangThai = 1;
+        } else {
+            trangThai = 0;
+        }
+        SinhVien sinhVien = new SinhVien(hoTen, diaChi, namSinh, trangThai);
+        JOptionPane.showMessageDialog(this, quanLySinhVienService.update(id, sinhVien));
+        loadData(quanLySinhVienService.getList());
+    }//GEN-LAST:event_btnSuaActionPerformed
+
+    private void tblSinhVienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSinhVienMouseClicked
+        // TODO add your handling code here:
+        int index = tblSinhVien.getSelectedRow();
+        txtId.setText(tblSinhVien.getValueAt(index, 0).toString());
+        txtHoTen.setText(tblSinhVien.getValueAt(index, 1).toString());
+        txtDiaChi.setText(tblSinhVien.getValueAt(index, 2).toString());
+        txtTuoi.setText(tblSinhVien.getValueAt(index, 3).toString());
+        if (tblSinhVien.getValueAt(index, 4).toString().equals("Passed")) {
+            rdoPass.setSelected(true);
+        } else {
+            rdoFail.setSelected(true);
+        }
+
+    }//GEN-LAST:event_tblSinhVienMouseClicked
 
     /**
      * @param args the command line arguments

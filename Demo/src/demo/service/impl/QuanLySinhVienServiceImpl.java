@@ -31,4 +31,19 @@ public class QuanLySinhVienServiceImpl implements QuanLySinhVienService {
         }
     }
 
+    @Override
+    public String update(int id, SinhVien sinhVien) {
+        // kiem tra sinh vien co ton tai hay khong??
+        // lay sinh vien theo id . neu khong co sinh vien nao => khong tim thay sinh vien de sua
+        // nguoc lai => tien hanh update
+        SinhVien sinhVienDetail = sinhVienRepository.getById(id);
+        if (sinhVienDetail == null) {
+            return "Khong tim thay sinh vien tuong ung";
+        } else if (sinhVienRepository.update(id, sinhVien)) {
+            return "Update thanh cong";
+        } else {
+            return "update that bai";
+        }
+    }
+
 }

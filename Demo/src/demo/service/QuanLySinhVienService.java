@@ -12,8 +12,10 @@ import java.util.ArrayList;
  * @author nguyenvv
  */
 public interface QuanLySinhVienService {
-    
+
     ArrayList<SinhVien> getList();
-    
+
     String them(SinhVien sinhVien);
+
+    String update(int id, SinhVien sinhVien);
 }
