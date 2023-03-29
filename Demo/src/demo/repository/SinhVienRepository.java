@@ -4,7 +4,9 @@
  */
 package demo.repository;
 
+import demo.model.LopHoc;
 import demo.model.SinhVien;
+import demo.model.Svien;
 import java.util.ArrayList;
 import java.sql.*;
 
@@ -13,9 +15,9 @@ import java.sql.*;
  * @author nguyenvv
  */
 public class SinhVienRepository {
-
+    
     private DbConnection dbConnection;
-
+    
     public ArrayList<SinhVien> getList() {
         ArrayList<SinhVien> listSinhVien = new ArrayList<>();
         String sql = "select * from sinh_vien";
@@ -31,14 +33,82 @@ public class SinhVienRepository {
                 sinhVien.setTrangThai(rs.getInt("trang_thai"));
                 listSinhVien.add(sinhVien);
             }
-
+            
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
+        
         return listSinhVien;
     }
-
+    
+    public ArrayList<Integer> getLopHoc() {
+        ArrayList<Integer> list = new ArrayList<>();
+        String sql = "select * from lop_hoc";
+        try (Connection con = dbConnection.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+               
+                list.add(rs.getInt("id_lop"));
+                
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+    
+    public ArrayList<Svien> getListSVien() {
+        ArrayList<Svien> listSinhVien = new ArrayList<>();
+        String sql = "select * from sinh_vien";
+        try (Connection con = dbConnection.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Svien sinhVien = new Svien();
+                sinhVien.setId(rs.getInt("id"));
+                sinhVien.setTenSinhVien(rs.getString("ten_sinh_vien"));
+                sinhVien.setGioiTinh(rs.getInt("gioi_tinh"));
+                sinhVien.setMaLop(rs.getInt("id_lop"));
+                listSinhVien.add(sinhVien);
+            }
+            
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
+        return listSinhVien;
+    }
+    
+      public ArrayList<Svien> search(Integer idLop, String tenSinhVien) {
+        ArrayList<Svien> listSinhVien = new ArrayList<>();
+        String sql = "select * from sinh_vien "
+                + " where (? = ten_sinh_vien OR ? is null OR ? LIKE '')"
+                + " and ? =id_lop ";
+        try (Connection con = dbConnection.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setObject(1, tenSinhVien);
+            ps.setObject(2, tenSinhVien);
+            ps.setObject(3, tenSinhVien);
+            ps.setObject(4, idLop);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Svien sinhVien = new Svien();
+                sinhVien.setId(rs.getInt("id"));
+                sinhVien.setTenSinhVien(rs.getString("ten_sinh_vien"));
+                sinhVien.setGioiTinh(rs.getInt("gioi_tinh"));
+                sinhVien.setMaLop(rs.getInt("id_lop"));
+                listSinhVien.add(sinhVien);
+            }
+            
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
+        return listSinhVien;
+    }
+    
     public Boolean addNew(SinhVien sinhVien) {
         String sql = "insert into sinh_vien(id, ho_ten, dia_chi, nam_sinh, trang_thai) "
                 + " VALUES(?,?,?,?,?)";
@@ -56,7 +126,7 @@ public class SinhVienRepository {
         }
         return false;
     }
-
+    
     public Boolean update(int id, SinhVien sinhVien) {
         String sql = "update sinh_vien set "
                 + "ho_ten =?, "
@@ -78,7 +148,7 @@ public class SinhVienRepository {
         }
         return false;
     }
-
+    
     public SinhVien getById(int id) {
         SinhVien sinhVien = new SinhVien();
         String sql = "select * from sinh_vien where id =? ";
@@ -99,7 +169,7 @@ public class SinhVienRepository {
         }
         return null;
     }
-
+    
     public static void main(String[] args) {
         SinhVienRepository sinhVienRepository = new SinhVienRepository();
         ArrayList<SinhVien> list = sinhVienRepository.getList();
@@ -107,5 +177,5 @@ public class SinhVienRepository {
             System.out.println(sinhVien.toString());
         }
     }
-
+    
 }

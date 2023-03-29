@@ -6,9 +6,13 @@
             <file>file:/Users/nguyenvv/Desktop/Java_3/Demo/src/demo/repository/DbConnection.java</file>
             <file>file:/Users/nguyenvv/Desktop/Java_3/Demo/src/demo/service/QuanLySinhVienService.java</file>
             <file>file:/Users/nguyenvv/Desktop/Java_3/Demo/src/demo/service/impl/QuanLySinhVienServiceImpl.java</file>
+            <file>file:/Users/nguyenvv/Desktop/Java_3/Demo/src/demo/repository/QLRepository.java</file>
             <file>file:/Users/nguyenvv/Desktop/Java_3/Demo/src/demo/repository/SinhVienRepository.java</file>
+            <file>file:/Users/nguyenvv/Desktop/Java_3/Demo/src/demo/model/SanPham.java</file>
             <file>file:/Users/nguyenvv/Desktop/Java_3/Demo/src/demo/view/ViewSinhVien.java</file>
             <file>file:/Users/nguyenvv/Desktop/Java_3/Demo/src/demo/Demo.java</file>
+            <file>file:/Users/nguyenvv/Desktop/Java_3/Demo/src/demo/model/DanhMuc.java</file>
+            <file>file:/Users/nguyenvv/Desktop/Java_3/Demo/src/demo/viewModel/SanPhamViewModel.java</file>
             <file>file:/Users/nguyenvv/Desktop/Java_3/Demo/src/demo/model/SinhVien.java</file>
         </group>
     </open-files>
